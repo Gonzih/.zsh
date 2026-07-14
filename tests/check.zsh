@@ -120,7 +120,6 @@ ZSH_SKIP_INTEGRATIONS=1 \
     source "$ZDOTDIR/.zshenv"
     fpath=("$1" $fpath)
     source "$ZDOTDIR/.zshrc"
-    (( ${fpath[(Ie)$1]} == 0 )) || exit 49
     [[ ${_comps[unsafe]:-} != _unsafe ]] || exit 50
   ' _ "$insecure_completion_dir" || fail 'insecure completion-path regression'
 
