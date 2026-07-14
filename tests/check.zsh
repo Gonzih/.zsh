@@ -53,6 +53,11 @@ function check_mode() {
         [[ $(bindkey -M viins "^C") == *vi-cmd-mode* ]] || exit 53
         [[ $(bindkey -M visual "^C") == *vi-cmd-mode* ]] || exit 54
         [[ $(bindkey -M vicmd "^C") == *send-break* ]] || exit 55
+        (( $+functions[_zsh_ctrl_c_editing] )) || exit 56
+        (( $+functions[_zsh_ctrl_c_restore] )) || exit 57
+        (( ${precmd_functions[(Ie)_zsh_ctrl_c_editing]} )) || exit 58
+        (( ${preexec_functions[(Ie)_zsh_ctrl_c_restore]} )) || exit 59
+        (( ${zshexit_functions[(Ie)_zsh_ctrl_c_restore]} )) || exit 60
       fi
 
       case $ZSH_KEYMAP in

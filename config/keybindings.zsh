@@ -59,6 +59,17 @@ if [[ $ZSH_KEYMAP == vi || $ZSH_KEYMAP == dvorak ]]; then
 
   typeset -g _ZSH_VI_STATE=I
 
+  function _zsh_ctrl_c_editing() {
+    # Disable the terminal interrupt character while ZLE owns the terminal so
+    # its active keymap receives Ctrl-C as an ordinary key.
+    command stty intr undef 2>/dev/null < /dev/tty || true
+  }
+
+  function _zsh_ctrl_c_restore() {
+    # Commands must inherit ordinary SIGINT behavior.
+    command stty intr '^C' 2>/dev/null < /dev/tty || true
+  }
+
   function _zsh_keymap_select() {
     case $KEYMAP in
       vicmd) _ZSH_VI_STATE=N ;;
@@ -79,8 +90,12 @@ if [[ $ZSH_KEYMAP == vi || $ZSH_KEYMAP == dvorak ]]; then
   }
 
   autoload -Uz add-zle-hook-widget
+  autoload -Uz add-zsh-hook
   add-zle-hook-widget keymap-select _zsh_keymap_select
   add-zle-hook-widget line-init _zsh_line_init
+  add-zsh-hook precmd _zsh_ctrl_c_editing
+  add-zsh-hook preexec _zsh_ctrl_c_restore
+  add-zsh-hook zshexit _zsh_ctrl_c_restore
 fi
 
 if [[ $ZSH_KEYMAP == dvorak ]]; then
@@ -173,6 +188,7 @@ if [[ $ZSH_KEYMAP == dvorak ]]; then
 
   function _zsh_exit_shell() {
     zle -I
+    _zsh_ctrl_c_restore
     builtin exit
   }
   zle -N _zsh_exit_shell

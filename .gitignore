@@ -2,5 +2,6 @@
 .zshenv.local
 .zshrc.local
 .zshrc.after
+.zsh_sessions/
 *.zwc
 .DS_Store
