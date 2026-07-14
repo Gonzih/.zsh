@@ -13,8 +13,8 @@
 # Fish used gpg-agent as ssh-agent. Set this to 0 to keep another SSH agent.
 # ZSH_USE_GPG_AGENT=0
 
-# Show the local user/host segment as the current Fish prompt does.
-# ZSH_PROMPT_SHOW_USER=1
+# User/host is visible by default, matching the current Fish prompt.
+# ZSH_PROMPT_SHOW_USER=0
 
 # Load NVM eagerly, or disable fzf integration while keeping stock Tab.
 # ZSH_LAZY_NVM=0

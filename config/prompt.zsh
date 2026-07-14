@@ -3,6 +3,7 @@ zmodload zsh/parameter
 # Byte escapes remain valid even when a minimal environment starts in C locale.
 typeset -g ZSH_PROMPT_SEPARATOR=${ZSH_PROMPT_SEPARATOR:-$'\xEE\x82\xB0'}
 typeset -g ZSH_PROMPT_DEFAULT_USER=${ZSH_PROMPT_DEFAULT_USER:-${USER:-}}
+typeset -g ZSH_PROMPT_SHOW_USER=${ZSH_PROMPT_SHOW_USER:-1}
 typeset -g _ZSH_PLATFORM_CONTEXT
 typeset -g _ZSH_PROMPT_BG=NONE
 typeset -g _ZSH_PROMPT_ESCAPED
@@ -55,6 +56,19 @@ function _zsh_prompt_git() {
   fi
 }
 
+function _zsh_prompt_directory() {
+  local directory=${PWD:-?}
+
+  if [[ -n ${HOME:-} && $directory == "$HOME" ]]; then
+    directory='~'
+  elif [[ -n ${HOME:-} && $directory == "$HOME"/* ]]; then
+    directory="~${directory#$HOME}"
+  fi
+
+  _zsh_prompt_escape "$directory"
+  _zsh_prompt_segment blue white "%Bcwd $_ZSH_PROMPT_ESCAPED%b"
+}
+
 function _zsh_prompt_context() {
   local output version
 
@@ -100,7 +114,7 @@ function _zsh_prompt_build() {
   (( EUID == 0 )) && _zsh_prompt_segment black yellow '⚡'
   (( ${#jobstates} > 0 )) && _zsh_prompt_segment black cyan '⊛'
 
-  if [[ ${ZSH_PROMPT_SHOW_USER:-0} == 1 || ${USER:-} != $ZSH_PROMPT_DEFAULT_USER || -n ${SSH_CLIENT:-} || -n ${SSH_CONNECTION:-} ]]; then
+  if [[ $ZSH_PROMPT_SHOW_USER == 1 || ${USER:-} != $ZSH_PROMPT_DEFAULT_USER || -n ${SSH_CLIENT:-} || -n ${SSH_CONNECTION:-} ]]; then
     _zsh_prompt_escape "${USER:-unknown}"
     _zsh_prompt_segment black white "$_ZSH_PROMPT_ESCAPED"
     _zsh_prompt_segment white black 'λ'
@@ -108,7 +122,7 @@ function _zsh_prompt_build() {
     _zsh_prompt_segment black white "$_ZSH_PROMPT_ESCAPED"
   fi
 
-  _zsh_prompt_segment blue black '%~'
+  _zsh_prompt_directory
   _zsh_prompt_git || true
 
   context=$(_zsh_prompt_context)

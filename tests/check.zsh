@@ -46,6 +46,8 @@ function check_mode() {
       [[ $PROMPT == *✘* ]] || exit 21
       [[ -n $HISTFILE && $HISTFILE == $XDG_STATE_HOME/* ]] || exit 22
       [[ ${_comps[tm]:-} == _tm && ${_comps[note]:-} == _note ]] || exit 48
+      [[ $PROMPT == *"cwd "* ]] || exit 51
+      [[ $PROMPT == *"${USER:-unknown}"* ]] || exit 52
 
       case $ZSH_KEYMAP in
         emacs)

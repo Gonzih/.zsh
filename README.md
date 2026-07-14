@@ -8,8 +8,8 @@ The default editing mode is Emacs. Vi is a feature, not a dependency.
 
 ## What is included
 
-- Native one-line Powerline prompt with status, root/jobs, SSH identity,
-  directory, Git branch/dirty state, Rust/Go project version, and OS context
+- Native one-line Powerline prompt with status, root/jobs, user/host, an
+  explicit high-contrast working directory, Git state, project version, and OS
 - Fish-like autosuggestions, syntax highlighting, completion, fuzzy tab
   selection, prefix history search, and `fzf` shortcuts
 - Native directory stack with `p`/`n`, plus `zoxide` integration when installed
@@ -134,7 +134,7 @@ ZSH_KEYMAP=emacs          # emacs, vi, or dvorak
 ZSH_USE_GPG_AGENT=0       # keep 1Password/Keychain/another SSH agent
 ZSH_LAZY_NVM=0            # load NVM eagerly instead of on first use
 ZSH_DISABLE_FZF=1         # retain stock Tab and skip fzf shell shortcuts
-ZSH_PROMPT_SHOW_USER=1    # always show the local user/host segment
+ZSH_PROMPT_SHOW_USER=0    # hide local user/host except for SSH/user changes
 NOTES_DIR="$HOME/notes"
 TODO_FILE="$HOME/TODO.md"
 ```
