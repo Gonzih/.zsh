@@ -104,6 +104,26 @@ PROMPT_PROBE="$prompt_probe_marker" \
     [[ ! -e $PROMPT_PROBE ]] || exit 30
   ' _ "$prompt_probe_repo" || fail 'Git branch prompt-injection regression'
 
+print -- 'security: insecure completion directories are ignored'
+typeset -r insecure_completion_dir=$temporary_home/insecure-completions
+command mkdir -p -- "$insecure_completion_dir"
+command chmod 0777 "$insecure_completion_dir"
+command touch "$insecure_completion_dir/_unsafe"
+HOME="$temporary_home" \
+XDG_CACHE_HOME="$temporary_home/insecure-cache" \
+XDG_STATE_HOME="$temporary_home/state" \
+XDG_DATA_HOME="$temporary_home/data" \
+ZDOTDIR="$root" \
+ZSH_SKIP_PLUGINS=1 \
+ZSH_SKIP_INTEGRATIONS=1 \
+  zsh -dfi -c '
+    source "$ZDOTDIR/.zshenv"
+    fpath=("$1" $fpath)
+    source "$ZDOTDIR/.zshrc"
+    (( ${fpath[(Ie)$1]} == 0 )) || exit 49
+    [[ ${_comps[unsafe]:-} != _unsafe ]] || exit 50
+  ' _ "$insecure_completion_dir" || fail 'insecure completion-path regression'
+
 print -- 'navigation: p/n rotate backward and forward'
 command mkdir -p -- "$temporary_home/dirs/a" "$temporary_home/dirs/b" "$temporary_home/dirs/c"
 HOME="$temporary_home" \
