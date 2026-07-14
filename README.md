@@ -93,6 +93,10 @@ To make either persistent, copy the local example and edit it:
 cp ~/.config/zsh/.zshrc.local.example ~/.config/zsh/.zshrc.local
 ```
 
+In either Vi mode, `Ctrl-C` returns from Insert or Visual mode to Normal mode
+without clearing the command line. From Normal mode, `Ctrl-C` cancels the
+command line.
+
 The Dvorak map assumes the operating system is already producing Programmer
 Dvorak characters. It preserves the Fish map's character bindings, which put
 motions on the physical QWERTY `hjkl` positions:

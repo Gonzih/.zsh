@@ -49,6 +49,12 @@ function check_mode() {
       [[ $PROMPT == *"cwd "* ]] || exit 51
       [[ $PROMPT == *"${USER:-unknown}"* ]] || exit 52
 
+      if [[ $ZSH_KEYMAP == vi || $ZSH_KEYMAP == dvorak ]]; then
+        [[ $(bindkey -M viins "^C") == *vi-cmd-mode* ]] || exit 53
+        [[ $(bindkey -M visual "^C") == *vi-cmd-mode* ]] || exit 54
+        [[ $(bindkey -M vicmd "^C") == *send-break* ]] || exit 55
+      fi
+
       case $ZSH_KEYMAP in
         emacs)
           [[ $(bindkey -M emacs "^P") == *up-line-or-beginning-search* ]] || exit 23
@@ -62,7 +68,6 @@ function check_mode() {
           [[ $(bindkey -M vicmd h) == *down-line-or-beginning-search* ]] || exit 27
           [[ $(bindkey -M vicmd n) == *vi-forward-char* ]] || exit 28
           [[ $(bindkey -M vicmd jj) == *kill-whole-line* ]] || exit 29
-          [[ $(bindkey -M viins "^C") == *vi-cmd-mode* ]] || exit 34
           [[ $(bindkey -M vicmd "^D") == *_zsh_exit_shell* ]] || exit 35
           [[ $(bindkey -M vicmd J) == *_zsh_dvorak_delete_at_eol* ]] || exit 36
           [[ $(bindkey -M vicmd j) != *vi-delete* ]] || exit 37

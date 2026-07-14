@@ -52,9 +52,10 @@ _zsh_bind_navigation_keys vicmd
 unfunction _zsh_bind_navigation_keys
 
 if [[ $ZSH_KEYMAP == vi || $ZSH_KEYMAP == dvorak ]]; then
-  # Fish's first Ctrl-C leaves insert mode without discarding the buffer; a
-  # second Ctrl-C in command mode cancels it.
+  # Fish's first Ctrl-C leaves insert/visual mode without discarding the
+  # buffer; Ctrl-C in command mode cancels it.
   bindkey -M viins '^C' vi-cmd-mode
+  bindkey -M visual '^C' vi-cmd-mode
 
   typeset -g _ZSH_VI_STATE=I
 
