@@ -1,0 +1,12 @@
+emulate -L zsh
+
+if (( $+commands[pbcopy] )); then
+  command pbcopy
+elif (( $+commands[wl-copy] )); then
+  command wl-copy
+elif (( $+commands[xclip] )); then
+  command xclip -selection clipboard
+else
+  print -u2 -- 'to-clipboard: install pbcopy, wl-copy, or xclip'
+  return 127
+fi

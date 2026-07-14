@@ -1,0 +1,4 @@
+emulate -L zsh
+local port=${1:-8000}
+local bind=${2:-127.0.0.1}
+command python3 -m http.server --bind "$bind" "$port"

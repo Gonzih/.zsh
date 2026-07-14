@@ -1,0 +1,5 @@
+#compdef tm
+
+local -a sessions
+sessions=("${(@f)$(command tmux list-sessions -F '#S' 2>/dev/null)}")
+_values 'tmux session' . "${sessions[@]}"

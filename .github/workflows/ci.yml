@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Zsh
+        run: sudo apt-get update && sudo apt-get install --yes zsh
+      - name: Validate configuration and pinned plugins
+        run: ./scripts/install.zsh --no-activate

@@ -1,0 +1,6 @@
+#compdef note
+
+local notes_dir=${NOTES_DIR:-$HOME/Dropbox/notes}
+local -a notes
+notes=("$notes_dir"/*.md(N:t:r))
+_describe 'note' notes

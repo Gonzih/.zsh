@@ -1,0 +1,7 @@
+emulate -L zsh
+
+if (( $+commands[eza] )); then
+  command eza -lah --group-directories-first "$@"
+else
+  command ls -lah "$@"
+fi

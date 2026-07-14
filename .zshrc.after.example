@@ -1,0 +1,5 @@
+# Late interactive overrides belong here. Copy this file to .zshrc.after.
+# It loads after tracked aliases/functions and before ZLE plugins are wrapped.
+
+# alias e='nvim'
+# function local-helper() { print -- 'hello' }

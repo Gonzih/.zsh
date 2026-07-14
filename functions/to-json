@@ -1,0 +1,2 @@
+emulate -L zsh
+command python3 -m json.tool "$@"

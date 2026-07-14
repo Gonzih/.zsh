@@ -1,0 +1,30 @@
+emulate -L zsh
+
+if ! (( $+commands[tmux] )); then
+  print -u2 -- 'tm: tmux is not installed'
+  return 127
+fi
+
+local requested=${1:-.}
+(( $# > 0 )) && shift
+
+local session
+if [[ $requested == . ]]; then
+  session=${PWD#$HOME/}
+  [[ $session == $PWD ]] && session=${PWD:t}
+else
+  session=$requested
+fi
+
+session=${session//[^[:alnum:]_.-]/-}
+[[ -n $session ]] || session=home
+
+if command tmux has-session -t "=$session" 2>/dev/null; then
+  if [[ -n ${TMUX:-} ]]; then
+    command tmux switch-client -t "=$session"
+  else
+    command tmux attach-session -d -t "=$session"
+  fi
+else
+  command tmux new-session -s "$session" "$@"
+fi

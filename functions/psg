@@ -1,0 +1,10 @@
+emulate -L zsh
+
+if (( $# == 0 )); then
+  print -u2 -- 'usage: psg PATTERN'
+  return 2
+fi
+
+command ps aux | command awk -v needle="${(L)${(j: :)@}}" '
+  NR == 1 || index(tolower($0), needle) { print }
+'

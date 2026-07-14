@@ -1,0 +1,9 @@
+emulate -L zsh
+
+if (( $+commands[openssl] )); then
+  command openssl rand -base64 48 | tr -d '\n'
+  print
+else
+  print -u2 -- 'random-pass: openssl is required'
+  return 127
+fi

@@ -1,0 +1,12 @@
+emulate -L zsh
+
+if (( $# == 0 )); then
+  print -u2 -- 'usage: note NAME'
+  return 2
+fi
+
+local notes_dir=${NOTES_DIR:-$HOME/Dropbox/notes}
+local file="$notes_dir/${(j:-:)@}.md"
+local editor=${VISUAL:-${EDITOR:-vi}}
+command mkdir -p -- "$notes_dir"
+${=editor} "$file"

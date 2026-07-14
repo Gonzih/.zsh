@@ -1,0 +1,8 @@
+emulate -L zsh
+
+if [[ $OSTYPE == linux* ]] && (( $+commands[setxkbmap] )); then
+  command setxkbmap \
+    -option ctrl:nocaps \
+    -option grp:lctrl_toggle \
+    'us(dvp),ru'
+fi

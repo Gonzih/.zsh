@@ -1,0 +1,2 @@
+emulate -L zsh
+builtin pushd -q +1

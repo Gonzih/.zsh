@@ -1,0 +1,6 @@
+emulate -L zsh
+
+local file=${TODO_FILE:-$HOME/Sync/TODO.md}
+local editor=${VISUAL:-${EDITOR:-vi}}
+command mkdir -p -- "${file:h}"
+${=editor} "$file"

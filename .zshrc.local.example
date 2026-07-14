@@ -1,0 +1,27 @@
+# Default: Fish-like editing with Emacs bindings.
+# ZSH_KEYMAP=emacs
+
+# Built-in Zsh Vi bindings:
+# ZSH_KEYMAP=vi
+
+# Programmer Dvorak remap ported from the Fish configuration:
+# ZSH_KEYMAP=dvorak
+
+# On graphical Linux, optionally apply us(dvp),ru and Caps Lock -> Control.
+# ZSH_APPLY_DVORAK_LAYOUT=1
+
+# Fish used gpg-agent as ssh-agent. Set this to 0 to keep another SSH agent.
+# ZSH_USE_GPG_AGENT=0
+
+# Show the local user/host segment as the current Fish prompt does.
+# ZSH_PROMPT_SHOW_USER=1
+
+# Load NVM eagerly, or disable fzf integration while keeping stock Tab.
+# ZSH_LAZY_NVM=0
+# ZSH_DISABLE_FZF=1
+
+# Personal paths used by note and todo.
+# NOTES_DIR="$HOME/Documents/notes"
+# TODO_FILE="$HOME/Documents/TODO.md"
+
+# Add other startup feature settings below. This file is ignored by Git.

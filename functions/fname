@@ -1,0 +1,8 @@
+emulate -L zsh
+
+if (( $# == 0 )); then
+  print -u2 -- 'usage: fname PATTERN'
+  return 2
+fi
+
+command find . -iname "*${(j: :)@}*" 2>/dev/null
